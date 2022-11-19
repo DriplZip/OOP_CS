@@ -20,7 +20,10 @@ namespace Backups
 
             string start = @"D:\Desktop\C#Study\labs\Labs\lab3\e.txt";
             string compress = @"D:\Desktop\C#Study\labs\Labs\lab3\e.gz";
-
+            BackupObject backupObject = new BackupObject(@"e.txt");
+            Console.WriteLine(backupObject.FilePath);
+            Console.WriteLine(backupObject.FileName);
+            Console.WriteLine(Path.GetFullPath(@"e.txt"));
            // BackupObject backupObject = new BackupObject("e.txt");
             
             using FileStream originalFileStream = new FileStream(start, FileMode.OpenOrCreate);

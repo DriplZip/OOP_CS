@@ -6,7 +6,7 @@
 
         public int GenerateNumber()
         {
-            return _archiveNumber++;
+            return ++_archiveNumber;
         }
     }
 }

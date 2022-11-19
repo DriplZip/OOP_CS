@@ -14,9 +14,11 @@ namespace BackupsTests
         public void WhenBackupTask_AndAdd2BackupObjectsWithSplitStorageDelete1BackupObject_ThenRestorePointShouldBe2StorageShouldBe3()
         {
             // Arrange.
-            BackupObject backupObject1 = new BackupObject(@"\1.txt");
-            BackupObject backupObject2 = new BackupObject(@"\2.txt");
-            BackupTask backupTask = new BackupTask("backupSplit", new SplitStorage(), new Repository(@"\repository"));
+            Repository repository = new Repository(@"repository");
+            BackupTask backupTask = new BackupTask("backupSplit", new SplitStorage(), new Repository(@"repository"));
+            BackupObject backupObject1 = new BackupObject($@"{repository.Name}\{backupTask.Name}\1.txt");
+            BackupObject backupObject2 = new BackupObject($@"{repository.Name}\{backupTask.Name}\2.txt");
+            
 
             // Act.
             backupTask.AddBackupObject(backupObject1);
@@ -35,24 +37,20 @@ namespace BackupsTests
         public void WhenBackupTask_AndAdd2BackupObjectsWithSingleStorage_ThenFoldersAndFilesShouldBeCreated()
         {
             // Arrange.
-            BackupObject backupObject1 = new BackupObject(@"1.txt");
-            BackupObject backupObject2 = new BackupObject(@"2.txt");
             Repository repository = new Repository(@"repository");
             BackupTask backupTask = new BackupTask("backupSingle", new SingleStorage(), repository);
+            BackupObject backupObject1 = new BackupObject($@"{repository.Name}\{backupTask.Name}\a.txt");
+            BackupObject backupObject2 = new BackupObject($@"{repository.Name}\{backupTask.Name}\b.txt");
+            DirectoryInfo directoryInfo = new DirectoryInfo(Path.Combine(repository.FullPath, backupTask.Name));
 
-            DirectoryInfo directoryInfo1 =
-                new DirectoryInfo(Path.Combine(repository.FullPath, backupTask.Name, backupObject1.FileName));
-            DirectoryInfo directoryInfo2 =
-                new DirectoryInfo(Path.Combine(repository.FullPath, backupTask.Name, backupObject2.FileName));
 
             // Act.
             backupTask.AddBackupObject(backupObject1);
             backupTask.AddBackupObject(backupObject2);
             backupTask.CreateBackup();
-            
+
             // Assert.
-            Assert.True(directoryInfo1.Exists);
-            Assert.True(directoryInfo2.Exists);
+            Assert.True(directoryInfo.Exists);
         }
     }
 }

@@ -12,16 +12,11 @@ namespace Backups.Algorithms
         {
             List<Storage> storages = new List<Storage>();
 
-            Storage storage = new Storage($"SingleArchive{archiveNumber}.gz");
+            Storage storage = new Storage($"SingleArchive{archiveNumber}");
             
             foreach (BackupObject backupObject in backupTask.BackupObjects)
             {
-                using FileStream originalFileStream = new FileStream(backupObject.FileName, FileMode.OpenOrCreate);
-                using FileStream compressedFileStream = File.Create(backupObject.FileName + ".gz");
-                using GZipStream compressor = new GZipStream(compressedFileStream, CompressionMode.Compress);
-                originalFileStream.CopyTo(compressor);
-                
-                storage.AddBackupObject(new BackupObject(compressedFileStream.Name));
+                storage.AddBackupObject(new BackupObject($@"{backupObject.FileName}"));
             }
             
             storages.Add(storage);

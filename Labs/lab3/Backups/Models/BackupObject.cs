@@ -10,7 +10,7 @@ namespace Backups.Models
         {
             if (String.IsNullOrWhiteSpace(filePath)) throw new BackupsException("Incorrect path name");
 
-            FilePath = filePath;
+            FilePath = Path.GetFullPath(filePath);
             FileName = Path.GetFileName(filePath);
         }
 
