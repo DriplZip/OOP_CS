@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Banks
+namespace BancksConsole
 {
     class Program
     {
