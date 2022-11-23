@@ -1,28 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using Backups.Algorithms;
 using Backups.Tools;
 
-namespace Backups.Models
+namespace Backups.Entities
 {
     public class RestorePoint
     {
         private List<Storage> _storages;
-        private int _archiveNumber;
-
-        public RestorePoint(DateTime timeOfCreation, List<Storage> storages, int archiveNumber)
+        
+        public RestorePoint(DateTime createTime, List<Storage> storages)
         {
-            if (storages.Count == 0) throw new BackupsException("Nothing to save");
+            if (storages.Count == 0) 
+                throw new BackupsException("");
             _storages = storages;
-
-            _archiveNumber = archiveNumber;
-
-            Date = timeOfCreation;
+            CreateTime = createTime;
             Id = Guid.NewGuid();
         }
-        public DateTime Date { get; }
+        
+        public DateTime CreateTime { get; }
         public Guid Id { get; }
-
         public IReadOnlyCollection<Storage> Storages => _storages.AsReadOnly();
     }
 }

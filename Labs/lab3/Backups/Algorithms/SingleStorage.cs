@@ -1,18 +1,16 @@
 ﻿using System.Collections.Generic;
-using System.IO;
-using System.IO.Compression;
 using Backups.Entities;
+using Backups.Interfaces;
 using Backups.Models;
 
 namespace Backups.Algorithms
 {
     public class SingleStorage : IStorageAlgorithm
     {
-        public List<Storage> StorageFiles(BackupTask backupTask, int archiveNumber)
+        public List<Storage> MakingCopy(BackupTask backupTask, int backupNumber)
         {
             List<Storage> storages = new List<Storage>();
-
-            Storage storage = new Storage($"SingleArchive{archiveNumber}");
+            Storage storage = new Storage($"Single_{backupTask.Name}({backupNumber})");
             
             foreach (BackupObject backupObject in backupTask.BackupObjects)
             {
@@ -20,7 +18,6 @@ namespace Backups.Algorithms
             }
             
             storages.Add(storage);
-
             return storages;
         }
     }

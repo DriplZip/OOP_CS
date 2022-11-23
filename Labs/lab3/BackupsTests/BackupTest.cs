@@ -41,7 +41,7 @@ namespace BackupsTests
             BackupTask backupTask = new BackupTask("backupSingle", new SingleStorage(), repository);
             BackupObject backupObject1 = new BackupObject($@"{repository.Name}\{backupTask.Name}\a.txt");
             BackupObject backupObject2 = new BackupObject($@"{repository.Name}\{backupTask.Name}\b.txt");
-            DirectoryInfo directoryInfo = new DirectoryInfo(Path.Combine(repository.FullPath, backupTask.Name));
+            DirectoryInfo directoryInfo = new DirectoryInfo(Path.Combine(repository.RepositoryPath, backupTask.Name));
 
 
             // Act.

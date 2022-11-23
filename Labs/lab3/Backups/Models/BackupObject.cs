@@ -6,14 +6,14 @@ namespace Backups.Models
 {
     public class BackupObject
     {
-        public BackupObject(string filePath)
+        public BackupObject(string fileName)
         {
-            if (String.IsNullOrWhiteSpace(filePath)) throw new BackupsException("Incorrect path name");
-
-            FilePath = Path.GetFullPath(filePath);
-            FileName = Path.GetFileName(filePath);
+            if (string.IsNullOrWhiteSpace(fileName))
+                throw new BackupsException("");
+            FileName = fileName;
+            FilePath = Path.GetFullPath(fileName);
         }
-
+        
         public string FilePath { get; }
         public string FileName { get; }
 
