@@ -52,7 +52,6 @@ namespace Backups.Entities
             List<Storage> storages = StorageAlgorithm.StorageFiles(_backupObjects, archiveNumber);
 
             RestorePoint restorePoint = new RestorePoint(DateTime.Now, storages, archiveNumber);
-            
             _restorePoints.Add(restorePoint);
             
             Repository.Save(this, _archiver);

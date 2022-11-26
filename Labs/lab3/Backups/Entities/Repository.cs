@@ -37,15 +37,10 @@ namespace Backups.Models
             {
                 foreach (BackupObject backupObject in storage.BackupObjects)
                 {
-                    archiver.Archive($@"{backupTask.Repository.GetName()}\{backupTask.Name}\{backupObject.FileName}",
-                        $@"{backupTask.Repository.GetName()}\{backupTask.Name}\{storage.Name}");
+                    archiver.Archive($@"{backupTask.Repository.Name}\{backupTask.Name}\{backupObject.FileName}",
+                        $@"{backupTask.Repository.Name}\{backupTask.Name}\{storage.Name}");
                 }
             }
-        }
-
-        public string GetName()
-        {
-            return Name;
         }
     }
 }

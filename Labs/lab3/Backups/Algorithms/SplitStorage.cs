@@ -10,13 +10,11 @@ namespace Backups.Algorithms
     {
         public List<Storage> StorageFiles(List<BackupObject> backupObjects, int archiveNumber)
         {
-            int id = 0;
-            
             List<Storage> storages = new List<Storage>();
 
             foreach (BackupObject backupObject in backupObjects)
             {
-                Storage storage = new Storage($"{backupObject.FileName}{id++}({archiveNumber})");
+                Storage storage = new Storage($"{backupObject.FileName}({archiveNumber})");
 
                 storage.AddBackupObject(new BackupObject($@"{backupObject.FileName}"));
                 storages.Add(storage);

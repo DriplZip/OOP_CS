@@ -19,13 +19,13 @@ namespace BackupsTests
             BackupTask backupTask = new BackupTask("backupSplit", new SplitStorage(), new Repository(@"repository"), archiverGz);
             BackupObject backupObject1 = new BackupObject($@"{repository.Name}\{backupTask.Name}\1.txt");
             BackupObject backupObject2 = new BackupObject($@"{repository.Name}\{backupTask.Name}\2.txt");
-            
+
 
             // Act.
             backupTask.AddBackupObject(backupObject1);
             backupTask.AddBackupObject(backupObject2);
             backupTask.CreateBackup();
-            
+
             backupTask.RemoveBackupObject(backupObject2);
             backupTask.CreateBackup();
 

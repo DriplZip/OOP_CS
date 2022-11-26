@@ -12,7 +12,7 @@ namespace Backups.Algorithms
         {
             List<Storage> storages = new List<Storage>();
 
-            Storage storage = new Storage($"SingleArchive{archiveNumber}");
+            Storage storage = new Storage($"SingleArchive({archiveNumber})");
             
             foreach (BackupObject backupObject in backupObjects)
             {
