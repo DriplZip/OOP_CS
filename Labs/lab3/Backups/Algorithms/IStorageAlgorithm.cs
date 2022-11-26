@@ -7,6 +7,6 @@ namespace Backups.Algorithms
 {
     public interface IStorageAlgorithm
     {
-        public List<Storage> StorageFiles(BackupTask backupTask, int archiveNumber);
+        public List<Storage> StorageFiles(List<BackupObject> backupObjects, int archiveNumber);
     }
 }

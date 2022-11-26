@@ -14,8 +14,9 @@ namespace BackupsTests
         public void WhenBackupTask_AndAdd2BackupObjectsWithSplitStorageDelete1BackupObject_ThenRestorePointShouldBe2StorageShouldBe3()
         {
             // Arrange.
+            IArchiver archiverGz = new ArchiverGz();
             Repository repository = new Repository(@"repository");
-            BackupTask backupTask = new BackupTask("backupSplit", new SplitStorage(), new Repository(@"repository"));
+            BackupTask backupTask = new BackupTask("backupSplit", new SplitStorage(), new Repository(@"repository"), archiverGz);
             BackupObject backupObject1 = new BackupObject($@"{repository.Name}\{backupTask.Name}\1.txt");
             BackupObject backupObject2 = new BackupObject($@"{repository.Name}\{backupTask.Name}\2.txt");
             
@@ -37,8 +38,9 @@ namespace BackupsTests
         public void WhenBackupTask_AndAdd2BackupObjectsWithSingleStorage_ThenFoldersAndFilesShouldBeCreated()
         {
             // Arrange.
+            IArchiver archiverGz = new ArchiverGz();
             Repository repository = new Repository(@"repository");
-            BackupTask backupTask = new BackupTask("backupSingle", new SingleStorage(), repository);
+            BackupTask backupTask = new BackupTask("backupSingle", new SingleStorage(), repository, archiverGz);
             BackupObject backupObject1 = new BackupObject($@"{repository.Name}\{backupTask.Name}\a.txt");
             BackupObject backupObject2 = new BackupObject($@"{repository.Name}\{backupTask.Name}\b.txt");
             DirectoryInfo directoryInfo = new DirectoryInfo(Path.Combine(repository.FullPath, backupTask.Name));

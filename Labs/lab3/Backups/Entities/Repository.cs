@@ -31,16 +31,14 @@ namespace Backups.Models
             _directoryInfo = new DirectoryInfo(path);
         }
         
-        public void Save(BackupTask backupTask)
+        public void Save(BackupTask backupTask, IArchiver archiver)
         {
             foreach (Storage storage in backupTask.RestorePoints.Last().Storages)
             {
                 foreach (BackupObject backupObject in storage.BackupObjects)
                 {
-                    using FileStream originalFileStream = new FileStream($@"{backupTask.Repository.GetName()}\{backupTask.Name}\{backupObject.FileName}", FileMode.OpenOrCreate);
-                    using FileStream compressedFileStream = File.Create($@"{backupTask.Repository.GetName()}\{backupTask.Name}\{storage.Name}.gz");
-                    using GZipStream compressor = new GZipStream(compressedFileStream, CompressionMode.Compress);
-                    originalFileStream.CopyTo(compressor);
+                    archiver.Archive($@"{backupTask.Repository.GetName()}\{backupTask.Name}\{backupObject.FileName}",
+                        $@"{backupTask.Repository.GetName()}\{backupTask.Name}\{storage.Name}");
                 }
             }
         }

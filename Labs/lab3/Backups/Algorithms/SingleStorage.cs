@@ -8,13 +8,13 @@ namespace Backups.Algorithms
 {
     public class SingleStorage : IStorageAlgorithm
     {
-        public List<Storage> StorageFiles(BackupTask backupTask, int archiveNumber)
+        public List<Storage> StorageFiles(List<BackupObject> backupObjects, int archiveNumber)
         {
             List<Storage> storages = new List<Storage>();
 
             Storage storage = new Storage($"SingleArchive{archiveNumber}");
             
-            foreach (BackupObject backupObject in backupTask.BackupObjects)
+            foreach (BackupObject backupObject in backupObjects)
             {
                 storage.AddBackupObject(new BackupObject($@"{backupObject.FileName}"));
             }

@@ -7,7 +7,7 @@ namespace Backups.Models
     {
         public void Read(string path);
 
-        public void Save(BackupTask backupTask);
+        public void Save(BackupTask backupTask, IArchiver archiver);
 
         public string GetName();
     }
