@@ -1,7 +1,9 @@
-﻿namespace Backups.Interfaces
+﻿using Backups.Entities;
+
+namespace Backups.Interfaces
 {
     public interface IRepository
     {
-        public void Create();
+        public void Create(BackupTask backupTask);
     }
 }

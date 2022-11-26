@@ -7,26 +7,14 @@ namespace Backups.Entities
 {
     public class RestorePoint
     {
-        private List<Storage> _storages;
-        
-        public RestorePoint(List<Storage> storages)
+        private List<BackupObject> _backupObjects;
+        public RestorePoint(List<BackupObject> backupObjects)
         {
-            _storages = storages;
+            _backupObjects = backupObjects;
             CreationTime = DateTime.Now;
         }
 
         public DateTime CreationTime { get; }
-        public IReadOnlyCollection<Storage> Storages => _storages.AsReadOnly();
-
-        public void AddStorage(string name, List<BackupObject> info)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new BackupsException("incorrect name input");
-            if (info is null)
-                throw new BackupsException("incorrect info input");
-            _storages.Add(new Storage(name, info));
-        }
-        
-        
+        public IReadOnlyCollection<BackupObject> BackupObjects => _backupObjects.AsReadOnly();
     }
 }

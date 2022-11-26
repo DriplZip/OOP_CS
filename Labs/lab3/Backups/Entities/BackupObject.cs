@@ -16,7 +16,7 @@ namespace Backups.Entities
         }
 
         public string FileName { get; }
-        public string FilePath { get; }
+        public string FilePath { get; private set; }
 
         public string GetFullPath()
         {

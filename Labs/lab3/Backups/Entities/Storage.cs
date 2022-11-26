@@ -18,5 +18,16 @@ namespace Backups.Entities
 
         public IReadOnlyCollection<BackupObject> Info => _info.AsReadOnly();
         public string Name { get; }
+        
+        public int StorageCount { get; set; }
+
+        public string GetBackupObjectPath(int i)
+        {
+            if (i < 0 && i > _info.Count)
+            {
+                throw new BackupsException("incorrect i input");
+            }
+            return _info[i].FilePath;
+        }
     }
 }
