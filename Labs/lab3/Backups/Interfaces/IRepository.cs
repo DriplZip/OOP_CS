@@ -2,6 +2,6 @@
 {
     public interface IRepository
     {
-        
+        public void Create();
     }
 }
