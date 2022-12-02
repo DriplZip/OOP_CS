@@ -3,13 +3,13 @@ using Banks.Tools;
 
 namespace Banks.Entities.Accounts
 {
-    public class CreditAccount : IAccount
+    public class DebitAccount : IAccount
     {
         private decimal _value;
         private decimal _percent;
         private Guid _id;
 
-        public CreditAccount(decimal percent, Guid id)
+        public DebitAccount(decimal percent, Guid id)
         {
             if (percent < 0) throw new AccountException("Percent cannot less than 0");
 
