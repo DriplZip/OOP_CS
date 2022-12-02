@@ -5,8 +5,9 @@ namespace Banks.Entities.Accounts
 {
     public class DebitAccount : IAccount
     {
-        private decimal _value;
+        private decimal _value = 0;
         private decimal _percent;
+        private decimal _monthlyPayment = 0;
         private Guid _id;
 
         public DebitAccount(decimal percent, Guid id)
@@ -29,6 +30,20 @@ namespace Banks.Entities.Accounts
             if (value < 0) throw new AccountException("Value cannot less than 0");
 
             _value += value;
+        }
+
+        public void PaymentCalculation()
+        {
+            Replenishment(_monthlyPayment);
+            
+            _monthlyPayment = 0;
+        }
+
+        public void PercentageCalculation()
+        {
+            decimal daysInYear = DateTime.IsLeapYear(DateTime.Now.Year) ? 366 : 365;
+
+            _monthlyPayment += _value * (_percent / daysInYear);
         }
     }
 }

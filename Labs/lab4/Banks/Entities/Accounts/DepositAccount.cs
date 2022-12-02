@@ -5,21 +5,44 @@ namespace Banks.Entities.Accounts
 {
     public class DepositAccount : IAccount
     {
+        private const decimal AmountOfValueToSmallPercentage = 50000;
+        private const decimal AmountOfValueToAveragePercentage = 100000;
         private decimal _value;
+        private decimal _smallPercentage;
+        private decimal _averagePercentage;
+        private decimal _largePercentage;
         private decimal _percent;
+        private DateTime _withdrawalUnlockDate;
+        private decimal _monthlyPayment = 0;
         private Guid _id;
 
-        public DepositAccount(decimal percent, Guid id)
+        public DepositAccount(decimal value, decimal smallPercentage, decimal averagePercentage, decimal largePercentage, Guid id, DateTime withdrawalUnlockDate)
         {
-            if (percent < 0) throw new AccountException("Percent cannot less than 0");
+            if (value < 0) throw new AccountException("Value cannot less than 0");
+            if (smallPercentage < 0 || averagePercentage < 0 || largePercentage < 0)
+                throw new AccountException("Percent cannot less than 0");
+            if (withdrawalUnlockDate < DateTime.Now)
+                throw new AccountException("You cannot set the deposit term earlier than now");
 
-            _percent = percent;
+            _value = value;
+            _smallPercentage = smallPercentage;
+            _averagePercentage = averagePercentage;
+            _largePercentage = largePercentage;
+            _withdrawalUnlockDate = withdrawalUnlockDate;
             _id = id;
+
+            if (value < AmountOfValueToSmallPercentage) 
+                _percent = _smallPercentage;
+            else if (value < AmountOfValueToAveragePercentage) 
+                _percent = _averagePercentage;
+            else 
+                _percent = _largePercentage;
         }
         public void Withdrawal(decimal value)
         {
             if (value < 0) throw new AccountException("Value cannot less than 0");
             if (value > _value) throw new AccountException("You cannot withdraw more money than you have in your account");
+            if (DateTime.Now < _withdrawalUnlockDate) throw new AccountException("You cannot withdraw money early");
 
             _value -= value;
         }
@@ -29,6 +52,20 @@ namespace Banks.Entities.Accounts
             if (value < 0) throw new AccountException("Value cannot less than 0");
 
             _value += value;
+        }
+
+        public void PaymentCalculation()
+        {
+            Replenishment(_monthlyPayment);
+            
+            _monthlyPayment = 0;
+        }
+
+        public void PercentageCalculation()
+        {
+            decimal daysInYear = DateTime.IsLeapYear(DateTime.Now.Year) ? 366 : 365;
+
+            _monthlyPayment += _value * (_percent / daysInYear);
         }
     }
 }

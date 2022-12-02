@@ -4,9 +4,18 @@ namespace Banks.Entities.Accounts
 {
     public class DebitAccountCreator : AccountCreator
     {
-        public override IAccount Create(decimal percent, Guid id)
+        private decimal _percent;
+        private Guid _id;
+        public DebitAccountCreator(decimal percent, Guid id)
         {
-            return new DebitAccount(percent, id);
+            _percent = percent;
+            _id = id;
+        }
+        public override IAccount Create()
+        {
+            DebitAccount account = new DebitAccount(_percent, _id);
+            
+            return account;
         }
     }
 }
