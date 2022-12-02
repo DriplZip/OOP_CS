@@ -9,7 +9,6 @@ namespace Banks.Entities.Accounts
         private decimal _commission;
         private decimal _creditLimit;
         private decimal _monthlyPayment = 0;
-        private Guid _id;
 
         public CreditAccount(decimal commission, decimal creditLimit, Guid id)
         {
@@ -17,8 +16,11 @@ namespace Banks.Entities.Accounts
             
             _commission = commission;
             _creditLimit = -Math.Abs(creditLimit);
-            _id = id;
+            Id = id;
         }
+        
+        public Guid Id { get; }
+        
         public void Withdrawal(decimal value)
         {
             if (value < 0) throw new AccountException("Value cannot less than 0");

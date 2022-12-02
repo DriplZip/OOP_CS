@@ -8,15 +8,16 @@ namespace Banks.Entities.Accounts
         private decimal _value = 0;
         private decimal _percent;
         private decimal _monthlyPayment = 0;
-        private Guid _id;
 
         public DebitAccount(decimal percent, Guid id)
         {
             if (percent < 0) throw new AccountException("Percent cannot less than 0");
             
             _percent = percent;
-            _id = id;
+            Id = id;
         }
+        public Guid Id { get; }
+        
         public void Withdrawal(decimal value)
         {
             if (value < 0) throw new AccountException("Value cannot less than 0");

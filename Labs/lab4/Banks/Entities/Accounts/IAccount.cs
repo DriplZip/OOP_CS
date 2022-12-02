@@ -1,7 +1,11 @@
-﻿namespace Banks.Entities.Accounts
+﻿using System;
+
+namespace Banks.Entities.Accounts
 {
     public interface IAccount
     {
+        public Guid Id { get; }
+        
         public void Withdrawal(decimal value);
         public void Replenishment(decimal value);
         public void PaymentCalculation();

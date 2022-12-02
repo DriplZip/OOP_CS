@@ -14,7 +14,6 @@ namespace Banks.Entities.Accounts
         private decimal _percent;
         private DateTime _withdrawalUnlockDate;
         private decimal _monthlyPayment = 0;
-        private Guid _id;
 
         public DepositAccount(decimal value, decimal smallPercentage, decimal averagePercentage, decimal largePercentage, Guid id, DateTime withdrawalUnlockDate)
         {
@@ -29,7 +28,7 @@ namespace Banks.Entities.Accounts
             _averagePercentage = averagePercentage;
             _largePercentage = largePercentage;
             _withdrawalUnlockDate = withdrawalUnlockDate;
-            _id = id;
+            Id = id;
 
             if (value < AmountOfValueToSmallPercentage) 
                 _percent = _smallPercentage;
@@ -38,6 +37,8 @@ namespace Banks.Entities.Accounts
             else 
                 _percent = _largePercentage;
         }
+        
+        public Guid Id { get; }
         public void Withdrawal(decimal value)
         {
             if (value < 0) throw new AccountException("Value cannot less than 0");

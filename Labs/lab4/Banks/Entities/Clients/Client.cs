@@ -16,10 +16,24 @@ namespace Banks.Entities.Clients
             Address = address;
         }
         
-        public int PassportId { get; }
-        public string Address { get; }
+        public int PassportId { get; private set; }
+        public string Address { get; private set; }
         public string Name { get; }
         public string Surname { get; }
         public bool IsDoubtfulClient() => (PassportId == 0 || Address == null);
+
+        public void SetPassportId(int passportId)
+        {
+            if (passportId <= 0) throw new ClientException("Incorrect passport id");
+
+            PassportId = passportId;
+        }
+        
+        public void SetAddress(string address)
+        {
+            if (string.IsNullOrWhiteSpace(address)) throw new ClientException("Incorrect address");
+
+            Address = address;
+        }
     }
 }
