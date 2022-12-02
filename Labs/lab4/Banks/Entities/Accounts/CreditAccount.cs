@@ -14,7 +14,7 @@ namespace Banks.Entities.Accounts
         public CreditAccount(decimal commission, decimal creditLimit, Guid id)
         {
             if (commission < 0) throw new AccountException("Commission cannot less than 0");
-
+            
             _commission = commission;
             _creditLimit = -Math.Abs(creditLimit);
             _id = id;

@@ -13,7 +13,7 @@ namespace Banks.Entities.Accounts
         public DebitAccount(decimal percent, Guid id)
         {
             if (percent < 0) throw new AccountException("Percent cannot less than 0");
-
+            
             _percent = percent;
             _id = id;
         }
