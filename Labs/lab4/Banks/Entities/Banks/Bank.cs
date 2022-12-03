@@ -24,6 +24,8 @@ namespace Banks.Entities.Banks
 
         public void DoTransaction(Transaction transaction, Client client)
         {
+            if (client.IsDoubtfulClient())
+                throw new BankException("You cannot complete the operation until you fill in the missing information");
             
         }
 

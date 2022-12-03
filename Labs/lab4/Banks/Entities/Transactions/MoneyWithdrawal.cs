@@ -1,4 +1,5 @@
 ﻿using Banks.Entities.Accounts;
+using Banks.Tools;
 
 namespace Banks.Entities.Banks.Transactions
 {
@@ -10,12 +11,15 @@ namespace Banks.Entities.Banks.Transactions
 
         public override void Do()
         {
-            throw new System.NotImplementedException();
+            Account.Withdrawal(Value);
         }
 
         public override void Cancel()
         {
-            throw new System.NotImplementedException();
+            if (!CanselIsAvailable) throw new AccountException("Transaction already cancelled");
+            
+            Account.Replenishment(Value);
+            CanselIsAvailable = false;
         }
     }
 }

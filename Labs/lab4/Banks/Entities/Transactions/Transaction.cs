@@ -19,7 +19,7 @@ namespace Banks.Entities.Banks.Transactions
         public Guid Id { get; }
         public decimal Value { get; }
         public IAccount Account { get; }
-        public bool CanselIsAvailable { get; }
+        public bool CanselIsAvailable { get; protected set; }
         public abstract void Do();
         public abstract void Cancel();
     }
