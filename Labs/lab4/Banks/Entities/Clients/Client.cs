@@ -1,8 +1,9 @@
-﻿using Banks.Tools;
+﻿using Banks.Observer;
+using Banks.Tools;
 
 namespace Banks.Entities.Clients
 {
-    public class Client
+    public class Client : IObserver
     {
         public Client(string name, string surname, int passportId = 0, string address = null)
         {
@@ -20,6 +21,8 @@ namespace Banks.Entities.Clients
         public string Address { get; private set; }
         public string Name { get; }
         public string Surname { get; }
+        
+        public string Notification { get; private set; }
         public bool IsDoubtfulClient() => (PassportId == 0 || Address == null);
 
         public void SetPassportId(int passportId)
@@ -34,6 +37,11 @@ namespace Banks.Entities.Clients
             if (string.IsNullOrWhiteSpace(address)) throw new ClientException("Incorrect address");
 
             Address = address;
+        }
+
+        public void Update(string message)
+        {
+            Notification = message;
         }
     }
 }

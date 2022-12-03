@@ -2,21 +2,25 @@
 using System.Collections.Generic;
 using Banks.Entities.Accounts;
 using Banks.Entities.Clients;
+using Banks.Observer;
 using Banks.Tools;
 
 namespace Banks.Entities.Banks
 {
-    public class Bank
+    public class Bank : IObservable
     {
         private Dictionary<Client, List<IAccount>> _clientAccounts;
-        private BankConfig _bankConfig;
+        private List<IObserver> _observers;
 
         public Bank(BankConfig bankConfig)
         {
-            _bankConfig = bankConfig;
+            BankConfig = bankConfig;
 
             _clientAccounts = new Dictionary<Client, List<IAccount>>();
+            _observers = new List<IObserver>();
         }
+        
+        public BankConfig BankConfig { get; }
 
         public void CreateAccount(Client client, AccountType type)
         {
@@ -41,13 +45,35 @@ namespace Banks.Entities.Banks
         {
             return type switch
             {
-                AccountType.Credit => new CreditAccountCreator(_bankConfig.Commission, _bankConfig.CreditLimit, id),
-                AccountType.Debit => new DebitAccountCreator(_bankConfig.Percent, id),
-                AccountType.Deposit => new DepositAccountCreator(_bankConfig.SmallPercentage,
-                    _bankConfig.AveragePercentage,
-                    _bankConfig.LargePercentage, id, _bankConfig.WithdrawalUnlockDate),
+                AccountType.Credit => new CreditAccountCreator(BankConfig.Commission, BankConfig.CreditLimit, id),
+                AccountType.Debit => new DebitAccountCreator(BankConfig.Percent, id),
+                AccountType.Deposit => new DepositAccountCreator(BankConfig.SmallPercentage,
+                    BankConfig.AveragePercentage,
+                    BankConfig.LargePercentage, id, BankConfig.WithdrawalUnlockDate),
                 _ => throw new BankException("Account type does not exist")
             };
+        }
+
+        public void RegisterObserver(IObserver observer)
+        {
+            if (_observers.Contains(observer)) throw new BankException("Observer already exist");
+            
+            _observers.Add(observer);
+        }
+
+        public void RemoveObserver(IObserver observer)
+        {
+            if (!_observers.Contains(observer)) throw new BankException("Observer does not exist");
+            
+            _observers.Remove(observer);
+        }
+
+        public void NotifyObservers(string message)
+        {
+            foreach (IObserver observer in _observers)
+            {
+                observer.Update(message);
+            }
         }
     }
 
