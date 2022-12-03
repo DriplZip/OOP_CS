@@ -14,28 +14,20 @@ namespace Banks.Entities.Accounts
         private decimal _percent;
         private DateTime _withdrawalUnlockDate;
         private decimal _monthlyPayment = 0;
+        private bool _isFirstReplenishment = true;
 
-        public DepositAccount(decimal value, decimal smallPercentage, decimal averagePercentage, decimal largePercentage, Guid id, DateTime withdrawalUnlockDate)
+        public DepositAccount(decimal smallPercentage, decimal averagePercentage, decimal largePercentage, Guid id, DateTime withdrawalUnlockDate)
         {
-            if (value < 0) throw new AccountException("Value cannot less than 0");
             if (smallPercentage < 0 || averagePercentage < 0 || largePercentage < 0)
                 throw new AccountException("Percent cannot less than 0");
             if (withdrawalUnlockDate < DateTime.Now)
                 throw new AccountException("You cannot set the deposit term earlier than now");
-
-            _value = value;
+            
             _smallPercentage = smallPercentage;
             _averagePercentage = averagePercentage;
             _largePercentage = largePercentage;
             _withdrawalUnlockDate = withdrawalUnlockDate;
             Id = id;
-
-            if (value < AmountOfValueToSmallPercentage) 
-                _percent = _smallPercentage;
-            else if (value < AmountOfValueToAveragePercentage) 
-                _percent = _averagePercentage;
-            else 
-                _percent = _largePercentage;
         }
         
         public Guid Id { get; }
@@ -51,6 +43,18 @@ namespace Banks.Entities.Accounts
         public void Replenishment(decimal value)
         {
             if (value < 0) throw new AccountException("Value cannot less than 0");
+
+            if (_isFirstReplenishment)
+            {
+                if (value < AmountOfValueToSmallPercentage)
+                    _percent = _smallPercentage;
+                else if (value < AmountOfValueToAveragePercentage)
+                    _percent = _averagePercentage;
+                else
+                    _percent = _largePercentage;
+
+                _isFirstReplenishment = false;
+            }
 
             _value += value;
         }
