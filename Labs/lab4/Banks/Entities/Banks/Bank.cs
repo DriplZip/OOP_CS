@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Banks.Entities.Accounts;
+using Banks.Entities.Banks.Transactions;
 using Banks.Entities.Clients;
 using Banks.Observer;
 using Banks.Tools;
@@ -19,6 +20,11 @@ namespace Banks.Entities.Banks
         }
 
         private BankConfig BankConfig { get; }
+
+        public void DoTransaction(ITransaction transaction, Client client)
+        {
+            
+        }
 
         public void CreateAccount(Client client, AccountType type)
         {
