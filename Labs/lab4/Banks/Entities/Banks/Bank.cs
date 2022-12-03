@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Banks.Entities.Accounts;
 using Banks.Entities.Banks.Transactions;
 using Banks.Entities.Clients;
@@ -24,9 +25,20 @@ namespace Banks.Entities.Banks
 
         public void DoTransaction(Transaction transaction, Client client)
         {
+            if (!_clientAccounts.ContainsKey(client)) throw new BankException("Client does not exist");
             if (client.IsDoubtfulClient())
                 throw new BankException("You cannot complete the operation until you fill in the missing information");
             
+            transaction.Do();
+        }
+
+        public void CancelTransaction(Guid id)
+        {
+            Transaction transaction = _transactions.FirstOrDefault(transaction => transaction.Id == id); 
+            if (transaction is null)
+                throw new BankException("Transaction does not exist");
+            
+            transaction.Cancel();
         }
 
         public void CreateAccount(Client client, AccountType type)
