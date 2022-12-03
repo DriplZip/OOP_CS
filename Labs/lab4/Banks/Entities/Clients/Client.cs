@@ -21,8 +21,8 @@ namespace Banks.Entities.Clients
         public string Address { get; private set; }
         public string Name { get; }
         public string Surname { get; }
-        
         public string Notification { get; private set; }
+        public bool Subscribed { get; private set; } = false;
         public bool IsDoubtfulClient() => (PassportId == 0 || Address == null);
 
         public void SetPassportId(int passportId)
@@ -37,6 +37,11 @@ namespace Banks.Entities.Clients
             if (string.IsNullOrWhiteSpace(address)) throw new ClientException("Incorrect address");
 
             Address = address;
+        }
+
+        public void ChangeSubscription()
+        {
+            Subscribed = !Subscribed;
         }
 
         public void Update(string message)
