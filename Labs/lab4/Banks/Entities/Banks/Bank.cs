@@ -11,6 +11,7 @@ namespace Banks.Entities.Banks
     public class Bank
     {
         private Dictionary<Client, List<IAccount>> _clientAccounts;
+        private List<Transaction> _transactions;
 
         public Bank(BankConfig bankConfig)
         {
@@ -21,7 +22,7 @@ namespace Banks.Entities.Banks
 
         private BankConfig BankConfig { get; }
 
-        public void DoTransaction(ITransaction transaction, Client client)
+        public void DoTransaction(Transaction transaction, Client client)
         {
             
         }
