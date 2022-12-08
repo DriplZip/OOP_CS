@@ -12,11 +12,13 @@ namespace Backups.Entities
         private List<BackupObject> _backupObjects; 
         private List<RestorePoint> _restorePoints;
         private ArchiveNumber _archiveNumber = new ArchiveNumber();
+        private IArchiver _archiver;
 
-        public BackupTask(string name, IStorageAlgorithm storageAlgorithm, IRepository repository)
+        public BackupTask(string name, IStorageAlgorithm storageAlgorithm, IRepository repository, IArchiver archiver)
         {
             _backupObjects = new List<BackupObject>();
             _restorePoints = new List<RestorePoint>();
+            _archiver = archiver;
 
             if (string.IsNullOrWhiteSpace(name)) throw new BackupsException("Incorrect backup task name");
             Name = name;
@@ -47,13 +49,12 @@ namespace Backups.Entities
         public void CreateBackup()
         {
             int archiveNumber = _archiveNumber.GenerateNumber();
-            List<Storage> storages = StorageAlgorithm.StorageFiles(this, archiveNumber);
+            List<Storage> storages = StorageAlgorithm.StorageFiles(_backupObjects, archiveNumber);
 
             RestorePoint restorePoint = new RestorePoint(DateTime.Now, storages, archiveNumber);
-            
             _restorePoints.Add(restorePoint);
             
-            Repository.Save(this);
+            Repository.Save(this, _archiver);
         }
     }
 }
