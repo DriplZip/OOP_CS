@@ -22,6 +22,13 @@ namespace Banks.Entities.Banks
         }
 
         private BankConfig BankConfig { get; }
+        public IReadOnlyDictionary<Client, List<IAccount>> ClientAccounts => _clientAccounts;
+        public string GetName() => BankConfig.Name;
+
+        public IAccount? FindAccount(Client client, Guid id)
+        {
+            return _clientAccounts[client].FirstOrDefault(account => account.Id == id);
+        }
 
         public void DoTransaction(Transaction transaction, Client client)
         {

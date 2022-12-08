@@ -3,9 +3,9 @@ using Banks.Tools;
 
 namespace Banks.Entities.Banks.Transactions
 {
-    public class Refill : Transaction
+    public class Replenishment : Transaction
     {
-        public Refill(decimal value, IAccount account) : base(value, account)
+        public Replenishment(decimal value, IAccount account) : base(value, account)
         {
         }
 
