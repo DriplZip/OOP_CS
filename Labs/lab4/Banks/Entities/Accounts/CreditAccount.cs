@@ -21,6 +21,7 @@ namespace Banks.Entities.Accounts
         
         public Guid Id { get; }
         
+        public decimal GetValue()  => _value;
         public void Withdrawal(decimal value)
         {
             if (value < 0) throw new AccountException("Value cannot less than 0");

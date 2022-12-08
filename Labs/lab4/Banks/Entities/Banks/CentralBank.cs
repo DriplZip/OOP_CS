@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -30,16 +31,26 @@ namespace Banks.Entities.Banks
             _banks.Add(bank);
         }
         
-        public void AddClient(Client client)
+        public void AddClient(Client client, Bank bank)
         {
+            if (!_banks.Contains(bank)) throw new BankException("Bank does not exist");
             if (_clients.Contains(client)) throw new BankException("Client already exist");
             
             _clients.Add(client);
+            FindBank(bank.GetName()).AddClient(client);
         }
 
         public Bank? FindBank(string name)
         {
             return _banks.FirstOrDefault(bank => bank.GetName() == name);
+        }
+
+        public Bank GetBank(string name)
+        {
+            Bank bank = _banks.FirstOrDefault(bank => bank.GetName() == name);
+            if (bank == null) throw new BankException("Bank does not exist");
+
+            return bank;
         }
         
         public Client? FindClient(int passportId)

@@ -55,7 +55,7 @@ namespace BanksConsole.Commands
 
             Client client = clientBuilder.Build();
             
-            _centralBank.AddClient(client);
+            _centralBank.AddClient(client, bank);
             _centralBank.FindBank(bankName).AddClient(client);
             Console.WriteLine("Client successfully created");
         }

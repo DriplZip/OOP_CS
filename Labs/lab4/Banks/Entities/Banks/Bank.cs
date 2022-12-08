@@ -33,7 +33,7 @@ namespace Banks.Entities.Banks
         public void DoTransaction(Transaction transaction, Client client)
         {
             if (!_clientAccounts.ContainsKey(client)) throw new BankException("Client does not exist");
-            if (client.IsDoubtfulClient())
+            if (client.IsDoubtfulClient() && transaction.Value > BankConfig.TransferLimit)
                 throw new BankException("You cannot complete the operation until you fill in the missing information");
             
             transaction.Do();
@@ -93,6 +93,7 @@ namespace Banks.Entities.Banks
                 _ => throw new BankException("Account type does not exist")
             };
         }
+        
     }
 
     public sealed class BankConfig : IObservable
