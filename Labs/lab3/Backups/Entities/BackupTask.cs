@@ -46,6 +46,12 @@ namespace Backups.Entities
             _backupObjects.Remove(backupObject);
         }
 
+        public void RemoveRestorePoint(RestorePoint restorePoint)
+        {
+            if (!_restorePoints.Contains(restorePoint)) throw new BackupsException("Restore point does not exist");
+            
+            _restorePoints.Remove(restorePoint);
+        }
         public void CreateBackup()
         {
             int archiveNumber = _archiveNumber.GenerateNumber();
