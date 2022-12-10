@@ -4,10 +4,10 @@ namespace Banks.Entities.Clients
 {
     public class ClientBuilder
     {
-        private string _name;
-        private string _surname;
-        private string _address;
-        private int _passportId;
+        private string _name = null;
+        private string _surname = null;
+        private string _address = null;
+        private int _passportId = 0;
 
         public Client Build()
         {
