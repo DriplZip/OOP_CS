@@ -28,7 +28,8 @@ namespace Backups.Extra.Algorithms
 
                 if (LimitType == LimitType.AtLeastOne)
                 {
-                    restorePoints = new List<RestorePoint>();
+                    if (restorePoints == null)  restorePoints = new List<RestorePoint>();
+                   
                     restorePoints.AddRange(points.Where(point => !restorePoints.Contains(point)));
                 }
                 else if (LimitType == LimitType.ForAll)

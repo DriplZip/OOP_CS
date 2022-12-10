@@ -19,7 +19,7 @@ namespace Backups.Extra.Algorithms
         
         public List<RestorePoint> FindRestorePointsToCleanup(BackupTaskExtra backupTaskExtra)
         {
-            List<RestorePoint> restorePoints = backupTaskExtra.RestorePoints.Take(backupTaskExtra.RestorePoints.Count - RestorePointsAmount).ToList();
+            List<RestorePoint> restorePoints = backupTaskExtra.RestorePoints.Take(RestorePointsAmount).ToList();
             return restorePoints;
         }
 

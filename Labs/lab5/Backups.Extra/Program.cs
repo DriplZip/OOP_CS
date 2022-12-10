@@ -24,7 +24,6 @@ namespace Backups.Extra
             };
             
             BackupTaskExtra backupTask = new BackupTaskExtra("backup", new SingleStorage(), new Repository("rep"), new ArchiverGz(), new CleanupByCount(2), LoggerType.Console);
-
             AppConfig<BackupTaskExtra> appConfig = new AppConfig<BackupTaskExtra>("backup.json", backupTask);
             
             appConfig.Save();

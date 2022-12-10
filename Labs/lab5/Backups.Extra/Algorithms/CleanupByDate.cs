@@ -18,7 +18,7 @@ namespace Backups.Extra.Algorithms
         public List<RestorePoint> FindRestorePointsToCleanup(BackupTaskExtra backupTaskExtra)
         {
             List<RestorePoint> restorePoints =
-                backupTaskExtra.RestorePoints.Where(point => (DateTime.Now.Subtract(point.Date)) < StorageInterval).ToList();
+                backupTaskExtra.RestorePoints.Where(point => (DateTime.Now.Subtract(point.Date)) > StorageInterval).ToList();
 
             return restorePoints;
         }
