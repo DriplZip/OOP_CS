@@ -64,6 +64,8 @@ namespace Banks.Entities.Banks
 
             for (int i = 0; i < monthCount; i++)
             {
+                if (bankForSpeedUp.ClientAccounts.Values == null) throw new BankException("Value is empty");
+                
                 foreach (IAccount account in bankForSpeedUp.ClientAccounts.Values)
                 {
                     account.PercentageCalculation();
