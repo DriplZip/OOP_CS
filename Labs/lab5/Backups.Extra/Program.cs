@@ -6,6 +6,7 @@ using Backups.Algorithms;
 using Backups.Entities;
 using Backups.Extra.Algorithms;
 using Backups.Extra.Entities;
+using Backups.Extra.Logger;
 using Backups.Models;
 using Newtonsoft.Json;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -22,7 +23,7 @@ namespace Backups.Extra
                 Formatting = Formatting.Indented,
             };
             
-            BackupTaskExtra backupTask = new BackupTaskExtra("backup", new SingleStorage(), new Repository("rep"), new ArchiverGz(), new CleanupByCount(2));
+            BackupTaskExtra backupTask = new BackupTaskExtra("backup", new SingleStorage(), new Repository("rep"), new ArchiverGz(), new CleanupByCount(2), LoggerType.Console);
 
             AppConfig<BackupTaskExtra> appConfig = new AppConfig<BackupTaskExtra>("backup.json", backupTask);
             

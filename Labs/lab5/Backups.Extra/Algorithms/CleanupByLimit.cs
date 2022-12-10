@@ -54,6 +54,8 @@ namespace Backups.Extra.Algorithms
             List<RestorePoint> restorePoints = FindRestorePointsToCleanup(backupTaskExtra);
             
             restorePoints.ForEach(backupTaskExtra.RemoveRestorePoint);
+            
+            backupTaskExtra.Logger.Log($"Restore points has been cleanup by {LimitType}");
         }
     }
 }
