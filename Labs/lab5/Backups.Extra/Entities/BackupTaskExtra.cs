@@ -2,17 +2,18 @@
 using Backups.Algorithms;
 using Backups.Entities;
 using Backups.Extra.Algorithms;
-using Backups.Models;
+using Backups.Models;   
 
 namespace Backups.Extra.Entities
 {
     public class BackupTaskExtra : BackupTask
     {
-        public BackupTaskExtra(string name, IStorageAlgorithm storageAlgorithm, IRepository repository, IArchiver archiver) : base(name, storageAlgorithm, repository, archiver)
+        public BackupTaskExtra(string name, IStorageAlgorithm storageAlgorithm, IRepository repository, IArchiver archiver, ICleanupAlgorithm cleanupAlgorithm) : base(name, storageAlgorithm, repository, archiver)
         {
+            CleanupAlgorithm = cleanupAlgorithm;
         }
 
-        public ICleanupAlgorithm _cleanupAlgorithm { get;  }
+        public ICleanupAlgorithm CleanupAlgorithm { get; private set; }
 
         public void MergeRestorePoint(RestorePoint oldPoint, RestorePoint newPoint)
         {
@@ -23,5 +24,11 @@ namespace Backups.Extra.Entities
                 if (!newPoint.Storages.Contains(pointStorage)) newPoint.AddStorage(pointStorage);
             }
         }
+
+        public void SetCleanupAlgorithm(ICleanupAlgorithm cleanupAlgorithm)
+        {
+            CleanupAlgorithm = cleanupAlgorithm;
+        }
+        
     }
 }

@@ -8,17 +8,18 @@ namespace Backups.Extra.Algorithms
 {
     public class CleanupByCount : ICleanupAlgorithm
     {
-        private int _restorePointsAmount;
-        
+
         public CleanupByCount(int restorePointsAmount)
         {
             if (restorePointsAmount < 0) throw new BackupExtraException("Restore points amount cannot be less than 0");
-            _restorePointsAmount = restorePointsAmount;
+            RestorePointsAmount = restorePointsAmount;
         }
+        
+        public int RestorePointsAmount { get; }
         
         public List<RestorePoint> FindRestorePointsToCleanup(BackupTaskExtra backupTaskExtra)
         {
-            List<RestorePoint> restorePoints = backupTaskExtra.RestorePoints.Take(backupTaskExtra.RestorePoints.Count - _restorePointsAmount).ToList();
+            List<RestorePoint> restorePoints = backupTaskExtra.RestorePoints.Take(backupTaskExtra.RestorePoints.Count - RestorePointsAmount).ToList();
             return restorePoints;
         }
 

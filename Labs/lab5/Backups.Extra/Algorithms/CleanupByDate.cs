@@ -8,17 +8,17 @@ namespace Backups.Extra.Algorithms
 {
     public class CleanupByDate : ICleanupAlgorithm
     {
-        private TimeSpan _storageInterval;
-
         public CleanupByDate(TimeSpan storageInterval)
         {
-            _storageInterval = storageInterval;
+            StorageInterval = storageInterval;
         }
+        
+        public TimeSpan StorageInterval { get; }
         
         public List<RestorePoint> FindRestorePointsToCleanup(BackupTaskExtra backupTaskExtra)
         {
             List<RestorePoint> restorePoints =
-                backupTaskExtra.RestorePoints.Where(point => (DateTime.Now.Subtract(point.Date)) < _storageInterval).ToList();
+                backupTaskExtra.RestorePoints.Where(point => (DateTime.Now.Subtract(point.Date)) < StorageInterval).ToList();
 
             return restorePoints;
         }

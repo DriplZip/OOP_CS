@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Buffers;
 using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.Json;
 using Backups.Algorithms;
 using Backups.Entities;
+using Backups.Extra.Algorithms;
+using Backups.Extra.Entities;
 using Backups.Models;
+using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Backups.Extra
 {
@@ -13,15 +16,19 @@ namespace Backups.Extra
     {
         static void Main(string[] args)
         {
-            BackupTask backupTask = new BackupTask("backup", new SingleStorage(), new Repository("rep"), new ArchiverGz());
-            backupTask.AddBackupObject(new BackupObject("e.txt"));
-            backupTask.CreateBackup();
-            BinaryFormatter formatter = new BinaryFormatter(); 
-            formatter.Serialize(new FileStream("backup.txt", FileMode.OpenOrCreate), backupTask);
-
-            /*string json = File.ReadAllText("backup.json");
-            BackupTask backupTask = JsonSerializer.Deserialize<BackupTask>(json);*/
+            JsonSerializerSettings _serializerSettings = new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                Formatting = Formatting.Indented,
+            };
             
+            BackupTaskExtra backupTask = new BackupTaskExtra("backup", new SingleStorage(), new Repository("rep"), new ArchiverGz(), new CleanupByCount(2));
+
+            AppConfig<BackupTaskExtra> appConfig = new AppConfig<BackupTaskExtra>("backup.json", backupTask);
+            
+            appConfig.Save();
+
+            BackupTaskExtra test = appConfig.Load();
         }
     }
 }

@@ -8,13 +8,15 @@ namespace Backups.Extra.Algorithms
     public class CleanupByLimit : ICleanupAlgorithm
     {
         private List<ICleanupAlgorithm> _algorithms;
-        private LimitType _limitType;
-        
+
         public CleanupByLimit(List<ICleanupAlgorithm> algorithms, LimitType limitType)
         {
             _algorithms = algorithms;
-            _limitType = limitType;
+            LimitType = limitType;
         }
+
+        public IReadOnlyCollection<ICleanupAlgorithm> Algorithms => _algorithms.AsReadOnly();
+        public LimitType LimitType { get; }
         
         public List<RestorePoint> FindRestorePointsToCleanup(BackupTaskExtra backupTaskExtra)
         {
@@ -24,12 +26,12 @@ namespace Backups.Extra.Algorithms
             {
                 List<RestorePoint> points = cleanupAlgorithm.FindRestorePointsToCleanup(backupTaskExtra);
 
-                if (_limitType == LimitType.AtLeastOne)
+                if (LimitType == LimitType.AtLeastOne)
                 {
                     restorePoints = new List<RestorePoint>();
                     restorePoints.AddRange(points.Where(point => !restorePoints.Contains(point)));
                 }
-                else if (_limitType == LimitType.ForAll)
+                else if (LimitType == LimitType.ForAll)
                 {
                     if (restorePoints == null)
                     {
