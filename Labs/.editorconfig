@@ -1,0 +1,140 @@
+[*.cs]
+
+# IDE0008: Use explicit type
+csharp_style_var_when_type_is_apparent=true:suggestion
+
+# IDE0008: Use explicit type
+csharp_style_var_elsewhere=true:suggestion
+
+# IDE0008: Use explicit type
+dotnet_diagnostic.ide0008.severity=warning
+
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.ide0005.severity=warning
+
+# IDE0040: Add accessibility modifiers
+dotnet_style_require_accessibility_modifiers=for_non_interface_members:suggestion
+
+# IDE0090: Use 'new(...)'
+csharp_style_implicit_object_creation_when_type_is_apparent=false
+csharp_preserve_single_line_blocks=true
+csharp_style_unused_value_assignment_preference=discard_variable:error
+csharp_prefer_static_local_function=true:warning
+csharp_style_prefer_pattern_matching=true:suggestion
+csharp_style_var_for_built_in_types=true:suggestion
+dotnet_diagnostic.ca1001.severity=error
+
+# SA1503: Braces should not be omitted
+dotnet_diagnostic.sa1503.severity=none
+
+# SA1200: Using directives should be placed correctly
+dotnet_diagnostic.sa1200.severity=none
+
+# SA1101: Prefix local calls with this
+dotnet_diagnostic.sa1101.severity=none
+
+# SA1600: Elements should be documented
+dotnet_diagnostic.sa1600.severity=none
+
+# SA1602: Enumeration elements should be documented 
+dotnet_diagnostic.sa1602.severity=none
+
+# SA1516: Elements should be separated by blank line
+dotnet_diagnostic.sa1516.severity=none
+
+# SA1309: Field names should not begin with underscore
+dotnet_diagnostic.sa1309.severity=silent
+
+# SA1633: File should have header
+dotnet_diagnostic.sa1633.severity=none
+csharp_new_line_before_open_brace=all
+csharp_space_between_method_declaration_parameter_list_parentheses=false
+csharp_new_line_before_members_in_object_initializers=false
+
+# SA1502: Element should not be on a single line
+dotnet_diagnostic.sa1502.severity=silent
+
+dotnet_style_prefer_auto_properties=true:suggestion
+dotnet_style_prefer_is_null_check_over_reference_equality_method=true:warning
+dotnet_style_null_propagation=true:warning
+dotnet_style_explicit_tuple_names=true:warning
+dotnet_style_prefer_inferred_tuple_names=true:warning
+dotnet_style_predefined_type_for_locals_parameters_members=true:suggestion
+dotnet_code_quality_unused_parameters=all:warning
+dotnet_style_qualification_for_field=false:suggestion
+dotnet_style_qualification_for_property=false:suggestion
+dotnet_style_qualification_for_method=false:suggestion
+dotnet_style_qualification_for_event=false:suggestion
+dotnet_diagnostic.ca1050.severity=warning
+dotnet_diagnostic.ca1061.severity=warning
+dotnet_diagnostic.ca1069.severity=warning
+dotnet_diagnostic.ca1303.severity=suggestion
+dotnet_diagnostic.ca1725.severity=warning
+dotnet_diagnostic.ca1724.severity=suggestion
+dotnet_diagnostic.ca1716.severity=warning
+dotnet_diagnostic.ca1720.severity=warning
+
+# IDE0040: Add accessibility modifiers
+dotnet_diagnostic.ide0040.severity=warning
+
+# SA0001: XML comment analysis disabled
+dotnet_diagnostic.sa0001.severity=none
+
+# SA1500: Braces for multi-line statements should not share line
+dotnet_diagnostic.sa1500.severity=error
+
+# Microsoft .NET properties
+csharp_preferred_modifier_order=public, private, protected, internal, new, static, abstract, virtual, sealed, readonly, override, extern, unsafe, volatile, async, required:suggestion
+csharp_space_after_cast=true
+dotnet_naming_rule.unity_serialized_field_rule.import_to_resharper=True
+dotnet_naming_rule.unity_serialized_field_rule.resharper_description=Unity serialized field
+dotnet_naming_rule.unity_serialized_field_rule.resharper_guid=5f0fdb63-c892-4d2c-9324-15c80b22a7ef
+dotnet_naming_rule.unity_serialized_field_rule.severity=none
+dotnet_naming_rule.unity_serialized_field_rule.style=lower_camel_case_style
+dotnet_naming_rule.unity_serialized_field_rule.symbols=unity_serialized_field_symbols
+dotnet_naming_style.lower_camel_case_style.capitalization=camel_case
+dotnet_naming_symbols.unity_serialized_field_symbols.applicable_accessibilities=*
+dotnet_naming_symbols.unity_serialized_field_symbols.applicable_kinds=
+dotnet_naming_symbols.unity_serialized_field_symbols.resharper_applicable_kinds=unity_serialised_field
+dotnet_naming_symbols.unity_serialized_field_symbols.resharper_required_modifiers=instance
+dotnet_style_parentheses_in_arithmetic_binary_operators=never_if_unnecessary:none
+dotnet_style_parentheses_in_other_binary_operators=always_for_clarity:none
+dotnet_style_parentheses_in_relational_binary_operators=never_if_unnecessary:none
+dotnet_style_predefined_type_for_member_access=true:suggestion
+
+# ReSharper properties
+resharper_autodetect_indent_settings=true
+resharper_keep_existing_declaration_block_arrangement=false
+resharper_keep_existing_embedded_block_arrangement=false
+resharper_keep_existing_enum_arrangement=false
+resharper_space_within_single_line_array_initializer_braces=false
+resharper_use_indent_from_vs=false
+
+# ReSharper inspection severities
+resharper_arrange_redundant_parentheses_highlighting=hint
+resharper_arrange_this_qualifier_highlighting=hint
+resharper_arrange_type_member_modifiers_highlighting=hint
+resharper_arrange_type_modifiers_highlighting=hint
+resharper_built_in_type_reference_style_for_member_access_highlighting=hint
+resharper_built_in_type_reference_style_highlighting=hint
+resharper_inconsistent_naming_highlighting=none
+resharper_redundant_base_qualifier_highlighting=warning
+resharper_suggest_var_or_type_built_in_types_highlighting=hint
+resharper_suggest_var_or_type_elsewhere_highlighting=hint
+resharper_suggest_var_or_type_simple_types_highlighting=hint
+resharper_web_config_module_not_resolved_highlighting=warning
+resharper_web_config_type_not_resolved_highlighting=warning
+resharper_web_config_wrong_module_highlighting=warning
+
+[*]
+charset=utf-8-bom
+end_of_line=crlf
+trim_trailing_whitespace=false
+insert_final_newline=false
+indent_style=space
+indent_size=4
+
+[*.{appxmanifest,asax,ascx,aspx,axaml,build,c,c++,cc,cginc,compute,cp,cpp,cs,cshtml,cu,cuh,cxx,dtd,fs,fsi,fsscript,fsx,fx,fxh,h,hh,hlsl,hlsli,hlslinc,hpp,hxx,inc,inl,ino,ipp,master,ml,mli,mpp,mq4,mq5,mqh,nuspec,paml,razor,resw,resx,shader,skin,tpp,usf,ush,vb,xaml,xamlx,xoml,xsd}]
+indent_style=space
+indent_size=4
+tab_width=4
