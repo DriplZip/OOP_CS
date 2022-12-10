@@ -60,7 +60,7 @@ namespace Backups.Entities
             RestorePoint restorePoint = new RestorePoint(DateTime.Now, storages, archiveNumber);
             _restorePoints.Add(restorePoint);
             
-            Repository.Save(this, _archiver);
+            Repository.Save(this, Archiver);
         }
     }
 }
