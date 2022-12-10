@@ -12,24 +12,24 @@ namespace Backups.Entities
         private List<BackupObject> _backupObjects; 
         private List<RestorePoint> _restorePoints;
         private ArchiveNumber _archiveNumber = new ArchiveNumber();
-        private IArchiver _archiver;
 
         public BackupTask(string name, IStorageAlgorithm storageAlgorithm, IRepository repository, IArchiver archiver)
         {
             _backupObjects = new List<BackupObject>();
             _restorePoints = new List<RestorePoint>();
-            _archiver = archiver;
 
             if (string.IsNullOrWhiteSpace(name)) throw new BackupsException("Incorrect backup task name");
             Name = name;
-            
+
             StorageAlgorithm = storageAlgorithm;
             Repository = repository;
+            Archiver = archiver;
         }
         
         public string Name { get; }
         public IStorageAlgorithm StorageAlgorithm { get; }
         public IRepository Repository { get; }
+        public IArchiver Archiver { get; }
         public IReadOnlyCollection<BackupObject> BackupObjects => _backupObjects.AsReadOnly();
         public IReadOnlyCollection<RestorePoint> RestorePoints => _restorePoints.AsReadOnly();
 
