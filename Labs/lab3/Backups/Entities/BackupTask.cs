@@ -44,7 +44,7 @@ namespace Backups.Entities
             BackupPath = path;
         }
 
-        public void DoBackup()
+        public void DoBackup(IArchiver archiver)
         {
             Repository.Create(this);
             Storage storage = BackupAlgorithm.SaveFile(_backupObjects, this);
@@ -52,10 +52,7 @@ namespace Backups.Entities
             Backups.AddRestorePoint(_backupObjects);
             for (int i = 0; i < _backupObjects.Count; i++)
             {
-                using FileStream startStream = new FileStream(_backupObjects[i].GetFullPath(), FileMode.OpenOrCreate);
-                using FileStream compressedStream = File.Create($"{storage.GetBackupObjectPath(i)}.gz");
-                using GZipStream compressor = new GZipStream(compressedStream, CompressionMode.Compress);
-                startStream.CopyTo(compressor);
+                archiver.Archive(_backupObjects[i].GetFullPath(), storage.GetBackupObjectPath(i));
             }
         }
 
