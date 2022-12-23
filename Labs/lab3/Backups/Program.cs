@@ -13,7 +13,6 @@ namespace Backups
             
             backupTask.AddBackupObject(new BackupObject("1.txt", @"D:\Desktop\C#Study\labs\Labs\lab3\Backups\bin\Debug\net5.0\1.txt"));
             backupTask.AddBackupObject(new BackupObject("2.txt", @"D:\Desktop\C#Study\labs\Labs\lab3\Backups\bin\Debug\net5.0\2.txt"));
-            backupTask.DoBackup();
         }
     }
 }

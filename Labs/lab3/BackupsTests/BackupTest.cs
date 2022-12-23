@@ -16,9 +16,9 @@ namespace BackupsTests
             BackupObject backupObject2 = new BackupObject("File2.txt", @"\File2.txt");
             backupTask.AddBackupObject(backupObject1);
             backupTask.AddBackupObject(backupObject2);
-            backupTask.DoBackup();
+            backupTask.DoBackup(new Archiver());
             backupTask.RemoveBackupObject(backupObject1);
-            backupTask.DoBackup();
+            backupTask.DoBackup(new Archiver());
             Assert.Equal(2, backupTask.Backups.RestorePoints.Count);
             Assert.Equal(3, backupTask.GetStorageCount());
         }
@@ -31,7 +31,7 @@ namespace BackupsTests
             BackupObject backupObject2 = new BackupObject("File2.txt", @"\File2.txt");
             backupTask.AddBackupObject(backupObject1);
             backupTask.AddBackupObject(backupObject2);
-            backupTask.DoBackup();
+            backupTask.DoBackup(new Archiver());
             Assert.True(Directory.Exists(backupTask.BackupPath));
         }
         
