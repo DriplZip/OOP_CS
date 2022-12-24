@@ -16,5 +16,12 @@ namespace Backups.Entities
 
         public DateTime CreationTime { get; }
         public IReadOnlyCollection<BackupObject> BackupObjects => _backupObjects.AsReadOnly();
+
+        public void AddBackupObject(BackupObject backupObject)
+        {
+            if (_backupObjects.Contains(backupObject)) throw new BackupsException("backup object already exist");
+
+            _backupObjects.Add(backupObject);
+        }
     }
 }
