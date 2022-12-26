@@ -20,9 +20,28 @@ namespace Backups.Models
             Date = timeOfCreation;
             Id = Guid.NewGuid();
         }
-        public DateTime Date { get; }
+        public DateTime Date { get; private set; }
         public Guid Id { get; }
 
         public IReadOnlyCollection<Storage> Storages => _storages.AsReadOnly();
+        
+        public void AddStorage(Storage storage)
+        {
+            if (_storages.Contains(storage)) throw new BackupsException("Storage already exist");
+            
+            _storages.Add(storage);
+        }
+        
+        public void RemoveStorage(Storage storage)
+        {
+            if (!_storages.Contains(storage)) throw new BackupsException("Storage does not exist");
+            
+            _storages.Remove(storage);
+        }
+
+        public void SetCreationDate(DateTime date)
+        {
+            Date = date;
+        }
     }
 }

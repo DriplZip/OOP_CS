@@ -12,24 +12,24 @@ namespace Backups.Entities
         private List<BackupObject> _backupObjects; 
         private List<RestorePoint> _restorePoints;
         private ArchiveNumber _archiveNumber = new ArchiveNumber();
-        private IArchiver _archiver;
 
         public BackupTask(string name, IStorageAlgorithm storageAlgorithm, IRepository repository, IArchiver archiver)
         {
             _backupObjects = new List<BackupObject>();
             _restorePoints = new List<RestorePoint>();
-            _archiver = archiver;
 
             if (string.IsNullOrWhiteSpace(name)) throw new BackupsException("Incorrect backup task name");
             Name = name;
-            
+
             StorageAlgorithm = storageAlgorithm;
             Repository = repository;
+            Archiver = archiver;
         }
         
         public string Name { get; }
         public IStorageAlgorithm StorageAlgorithm { get; }
         public IRepository Repository { get; }
+        public IArchiver Archiver { get; }
         public IReadOnlyCollection<BackupObject> BackupObjects => _backupObjects.AsReadOnly();
         public IReadOnlyCollection<RestorePoint> RestorePoints => _restorePoints.AsReadOnly();
 
@@ -46,6 +46,12 @@ namespace Backups.Entities
             _backupObjects.Remove(backupObject);
         }
 
+        public void RemoveRestorePoint(RestorePoint restorePoint)
+        {
+            if (!_restorePoints.Contains(restorePoint)) throw new BackupsException("Restore point does not exist");
+            
+            _restorePoints.Remove(restorePoint);
+        }
         public void CreateBackup()
         {
             int archiveNumber = _archiveNumber.GenerateNumber();
@@ -54,7 +60,7 @@ namespace Backups.Entities
             RestorePoint restorePoint = new RestorePoint(DateTime.Now, storages, archiveNumber);
             _restorePoints.Add(restorePoint);
             
-            Repository.Save(this, _archiver);
+            Repository.Save(this, Archiver);
         }
     }
 }
