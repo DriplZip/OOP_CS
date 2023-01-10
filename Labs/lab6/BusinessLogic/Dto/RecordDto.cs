@@ -2,4 +2,4 @@
 
 namespace BusinessLogic.Dto;
 
-public record RecordDto (Guid id, Employee employee);
+public record RecordDto (Guid id, Guid employeeId);

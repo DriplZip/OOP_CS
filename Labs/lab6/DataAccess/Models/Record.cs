@@ -2,14 +2,16 @@
 
 public class Record
 {
-    private Record() { }
+    protected Record() { }
 
-    public Record(Guid id, Employee employee)
+    public Record(Guid id, Guid employeeId)
     {
         Id = id;
-        Employee = employee;
+        EmployeeId = employeeId;
+        Messages = new List<Message>();
     }
 
     public Guid Id { get; set; }
-    public Employee Employee { get; set; }
+    public Guid EmployeeId { get; set; }
+    public ICollection<Message> Messages { get; set; }
 }

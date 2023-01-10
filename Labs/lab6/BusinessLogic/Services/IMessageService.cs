@@ -1,27 +1,22 @@
 ﻿using BusinessLogic.Dto;
+using DataAccess.Enums;
 using DataAccess.Models;
 
 namespace BusinessLogic.Services;
 
 public interface IMessageService
 {
-    Task<MessageDto> Create(Employee employee);
+    Task<MessageDto> Create(string text, Guid employeeId);
 
-    Task<List<ReportsDomain.Models.WorkTask>> GetAllTasks();
+    Task<MessageDto> GetMessageById(Guid id);
 
-    Task<ReportsDomain.Models.WorkTask> GetTaskById(Guid id);
+    Task<List<MessageDto>> GetMessagesByEmployee(Guid employeeId);
 
-    Task<ReportsDomain.Models.WorkTask> GetTaskByDate(DateTime dateTime);
+    Task<List<MessageDto>> GetNotViewedMessages();
 
-    Task<ReportsDomain.Models.WorkTask> GetTaskByEmployee(Employee employee);
+    Task<MessageDto> UpdateMessageStatus(Guid id, MessageStatus status);
 
-    List<ReportsDomain.Models.WorkTask> GetUnchangedTasks();
-
-    Task<ReportsDomain.Models.WorkTask> UpdateTaskStatus(Guid id, TaskStatus status);
-
-    Task<ReportsDomain.Models.WorkTask> SetTaskComment(Guid id, string comment);
+    Task<MessageDto> SetMessageComment(Guid id, string comment);
 
     Task Delete(Guid id);
-
-    bool Exists(Guid id);
 }

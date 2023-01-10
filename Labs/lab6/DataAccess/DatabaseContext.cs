@@ -14,24 +14,33 @@ public class DatabaseContext : DbContext
     public DbSet<Employee> Employees { get; set; }
     public DbSet<Message> Messages { get; set; }
     public DbSet<Record> Records { get; set; }
+    public DbSet<Account> Accounts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Employee>(builder =>
+        modelBuilder.Entity<Employee>();
+        modelBuilder.Entity<Record>();
+        modelBuilder.Entity<Account>();
+        modelBuilder.Entity<Message>();
+        /*modelBuilder.Entity<Employee>(builder =>
         {
-            builder.HasMany(x => x.Messages).WithOne(x => x.Employee);
+            builder.HasMany(x => x.Messages);
         });
 
         modelBuilder.Entity<Record>(builder =>
         {
-            builder.HasOne(x => x.Employee);
+            builder.HasMany(x => x.Messages);
         });
 
-        modelBuilder.Entity<Message>(builder =>
+        modelBuilder.Entity<Account>(builder =>
         {
-            builder.HasOne(x => x.Employee);
-        });
+            builder.HasOne(x => x.Login);
+            builder.HasOne(x => x.PasswordHash);
+        });*/
+    }
 
-        modelBuilder.Entity<Account>();
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        optionsBuilder.UseSqlite("Data Source=database.db");
     }
 }

@@ -2,6 +2,6 @@
 
 public class BusinessLogicException : Exception
 {
-    protected BusinessLogicException(string message)
+    public BusinessLogicException(string message)
         : base(message) { }
 }

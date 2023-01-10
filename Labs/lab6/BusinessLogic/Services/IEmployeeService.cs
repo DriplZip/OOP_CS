@@ -1,22 +1,19 @@
 ﻿using BusinessLogic.Dto;
+using DataAccess.Models;
 
 namespace BusinessLogic.Services;
 
 public interface IEmployeeService
 {
-    Task<EmployeeDto> Create(string name, string surname);
-
-    Task<EmployeeDto> FindByFIO(string name, string surname);
+    Task<EmployeeDto> CreateEmployee(string name, string surname);
 
     Task<EmployeeDto> FindById(Guid id);
 
     Task Delete(Guid id);
 
-    Task AddMessage(Guid id);
+    Task AddMessage(Guid employeeId, Guid messageId);
 
-    Task AddDirector(Guid id);
+    Task AddDirector(Guid employeeId, Guid directorId);
 
-    Task AddSubordinates(Guid id);
-
-    bool Exist(Guid id);
+    Task AddSubordinates(Guid directorId, Guid subordinatesId);
 }

@@ -1,46 +1,91 @@
 ﻿using BusinessLogic.Dto;
+using BusinessLogic.Exceptions;
+using BusinessLogic.Mapping;
+using DataAccess;
+using DataAccess.Models;
+using Microsoft.EntityFrameworkCore;
+
+#nullable disable
 
 namespace BusinessLogic.Services.Implementations;
 
-public class EmployeeService: IEmployeeService
+public class EmployeeService : IEmployeeService
 {
-    public async Task<EmployeeDto> Create(string name, string surname)
+    private readonly DatabaseContext _context;
+
+    public EmployeeService(DatabaseContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
     }
 
-    public async Task<EmployeeDto> FindByFIO(string name, string surname)
+    public async Task<EmployeeDto> CreateEmployee(string name, string surname)
     {
-        throw new NotImplementedException();
+        Employee employee = new Employee(Guid.NewGuid(), name, surname);
+
+        _context.Employees.Add(employee);
+        await _context.SaveChangesAsync();
+
+        return employee.AsDto();
     }
 
     public async Task<EmployeeDto> FindById(Guid id)
     {
-        throw new NotImplementedException();
+        Employee employee = await _context.Employees.FirstOrDefaultAsync(employee => employee.Id == id);
+        if (employee is null) throw new EntityNotFoundException("Employee does not exist");
+
+        return employee.AsDto();
     }
 
     public async Task Delete(Guid id)
     {
-        throw new NotImplementedException();
+        Employee employee = await _context.Employees.FirstOrDefaultAsync(employee => employee.Id == id);
+
+        if (employee is null) throw new EntityNotFoundException("Employee does not exist");
+
+        _context.Employees.Remove(employee);
+        await _context.SaveChangesAsync();
     }
 
-    public async Task AddMessage(Guid id)
+    public async Task AddMessage(Guid employeeId, Guid messageId)
     {
-        throw new NotImplementedException();
+        Employee employee = await _context.Employees.FirstOrDefaultAsync(employee => employee.Id == employeeId);
+        if (employee is null) throw new EntityNotFoundException("Employee does not exist");
+
+        Message message = await _context.Messages.FirstOrDefaultAsync(message => message.Id == messageId);
+        if (message is null) throw new EntityNotFoundException("Message does not exist");
+
+        message.EmployeeId = employee.Id;
+        employee.Messages.Add(message);
+
+        _context.Update(employee);
+        _context.Update(message);
+
+        await _context.SaveChangesAsync();
     }
 
-    public async Task AddDirector(Guid id)
+    public async Task AddDirector(Guid employeeId, Guid directorId)
     {
-        throw new NotImplementedException();
+        Employee employee = await _context.Employees.FirstOrDefaultAsync(employee => employee.Id == employeeId);
+        if (employee is null) throw new EntityNotFoundException("Employee does not exist");
+
+        employee.DirectorId = directorId;
+        _context.Update(employee);
+
+        await _context.SaveChangesAsync();
     }
 
-    public async Task AddSubordinates(Guid id)
+    public async Task AddSubordinates(Guid directorId, Guid subordinatesId)
     {
-        throw new NotImplementedException();
-    }
+        Employee director = await _context.Employees.FirstOrDefaultAsync(director => director.Id == directorId);
+        if (director is null) throw new EntityNotFoundException("Director does not exist");
 
-    public bool Exist(Guid id)
-    {
-        throw new NotImplementedException();
+        Employee subordinates = await _context.Employees.FirstOrDefaultAsync(employee => employee.Id == subordinatesId);
+        if (subordinates is null)
+            throw new EntityNotFoundException("Employee does not exist");
+
+        director.Subordinates.Add(subordinates);
+        _context.Update(director);
+
+        await _context.SaveChangesAsync();
     }
 }

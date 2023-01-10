@@ -2,7 +2,7 @@
 
 public class Employee
 {
-    private Employee() { }
+    protected Employee() { }
 
     public Employee(Guid id, string name, string surname)
     {
@@ -10,13 +10,13 @@ public class Employee
         Name = name;
         Surname = surname;
         Messages = new List<Message>();
-        Subordinates = new List<Guid>();
+        Subordinates = new List<Employee>();
     }
 
     public Guid Id { get; set; }
     public Guid DirectorId { get; set; }
     public string Name { get; set; }
     public string Surname { get; set; }
-    public List<Message> Messages { get; set; }
-    public List<Guid> Subordinates { get; set; }
+    public ICollection<Message> Messages { get; set; }
+    public ICollection<Employee> Subordinates { get; set; }
 }

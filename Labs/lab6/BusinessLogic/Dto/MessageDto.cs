@@ -3,4 +3,4 @@ using DataAccess.Models;
 
 namespace BusinessLogic.Dto;
 
-public record MessageDto(Employee employee, string comment, Guid id, DateTime creationTime, MessageStatus messageStatus);
+public record MessageDto(Guid employeeId, string messageText, string comment, Guid messageId, DateTime creationTime, MessageStatus messageStatus);
