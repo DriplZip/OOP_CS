@@ -18,25 +18,10 @@ public class DatabaseContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        /*modelBuilder.Entity<Employee>();
+        modelBuilder.Entity<Employee>();
         modelBuilder.Entity<Record>();
         modelBuilder.Entity<Account>();
-        modelBuilder.Entity<Message>();*/
-        modelBuilder.Entity<Employee>(builder =>
-        {
-            builder.HasMany(x => x.Messages);
-        });
-
-        modelBuilder.Entity<Record>(builder =>
-        {
-            builder.HasMany(x => x.Messages);
-        });
-
-        modelBuilder.Entity<Account>(builder =>
-        {
-            builder.HasOne(x => x.Login);
-            builder.HasOne(x => x.PasswordHash);
-        });
+        modelBuilder.Entity<Message>();
     }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

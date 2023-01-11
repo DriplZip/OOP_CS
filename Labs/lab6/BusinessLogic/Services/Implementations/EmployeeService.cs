@@ -2,6 +2,7 @@
 using BusinessLogic.Exceptions;
 using BusinessLogic.Mapping;
 using DataAccess;
+using DataAccess.Enums;
 using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -55,6 +56,7 @@ public class EmployeeService : IEmployeeService
         if (message is null) throw new EntityNotFoundException("Message does not exist");
 
         message.EmployeeId = employee.Id;
+        message.Status = MessageStatus.New;
         employee.Messages.Add(message);
 
         _context.Update(employee);

@@ -82,6 +82,7 @@ public class MessageService : IMessageService
         if (message is null) throw new EntityNotFoundException("Message does not exist");
 
         message.Comment = comment;
+        await UpdateMessageStatus(message.Id, MessageStatus.Processed);
 
         _context.Update(message);
         await _context.SaveChangesAsync();
